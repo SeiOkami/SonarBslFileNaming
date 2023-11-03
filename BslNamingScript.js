@@ -54,6 +54,7 @@
         ['AccountingRegisters', 'РегистрыБухгалтерии'],
         ['AccumulationRegisters', 'РегистрыНакопления'],
         ['BusinessProcesses', 'БизнесПроцессы'],
+        ['CalculationRegisters', 'РегистрыРасчета'],
         ['Catalogs', 'Справочники'],
         ['ChartsOfAccounts', 'ПланыСчетов'],
         ['ChartsOfCalculationTypes', 'ПланыВидовРасчета'],
@@ -92,7 +93,10 @@
     const replacePathFile = new Map([
         ['ManagerModule.bsl', 'МодульМенеджера'],
         ['ObjectModule.bsl', 'МодульОбъекта'],
-        ['ManagedApplicationModule.bsl', 'МодульПриложения'],
+        ['RecordSetModule.bsl', 'МодульНабораЗаписей'],
+        ['ManagedApplicationModule.bsl', 'МодульУправляемогоПриложения'],
+        ['OrdinaryApplicationModule.bsl', 'МодульОбычногоПриложения'],
+        ['ExternalConnectionModule.bsl', 'МодульВнешнегоСоединения'],
     ]);
 
     //Функция обрабатываем новые элементы страницы
