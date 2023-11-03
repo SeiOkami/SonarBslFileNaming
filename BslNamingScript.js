@@ -144,7 +144,7 @@
             }
 
             let atribute = thisElem.getAttribute('data-clipboard-text');
-            if (isBslFile('.bsl')){
+            if (isBslFile(atribute)){
                 return atribute;
             }
 
