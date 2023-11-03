@@ -116,7 +116,7 @@
                 let fullPath = funcGetPath(element);
                 if (fullPath != undefined && fullPath.element != undefined){
                     let presentation = presentationFileOneS(fullPath.path);
-                    if (presentation > "") {
+                    if (presentation > "" && hasOnlyText(fullPath.element)) {
                         fullPath.element.textContent = presentation;
                     };
                 }
@@ -204,5 +204,15 @@
             this.path = path;
         }
     }
+
+    //Проверяет, что элемент содержит внутри только текст (без подчиненных элементов)
+    function hasOnlyText(element) {
+        for (let i = 0; i < element.childNodes.length; i++) {
+          if (element.childNodes[i].nodeType === 1) {
+            return false;
+          }
+        }
+        return true;
+      }
 
 })();
