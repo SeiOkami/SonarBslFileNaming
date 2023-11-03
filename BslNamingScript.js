@@ -113,13 +113,19 @@
         selectorFunctions.forEach((funcGetPath, selector) => {
             const test_spans = node.querySelectorAll(selector);
             test_spans.forEach(element => {
+
                 let fullPath = funcGetPath(element);
-                if (fullPath != undefined && fullPath.element != undefined){
+                if (fullPath != undefined 
+                    && fullPath.element != undefined
+                    && hasOnlyText(fullPath.element)){
+
                     let presentation = presentationFileOneS(fullPath.path);
-                    if (presentation > "" && hasOnlyText(fullPath.element)) {
+                    if (presentation > "") {
                         fullPath.element.textContent = presentation;
                     };
+
                 }
+                
             });
         });
     }
