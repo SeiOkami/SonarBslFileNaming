@@ -1,14 +1,15 @@
 // ==UserScript==
 // @name         SonarBSL
-// @namespace    http://tampermonkey.net/
 // @version      0.5
-// @description  try to take over the world!
-// @author       You
+// @description  Скрипт для SonarQube, который изменяет отображение файлов модулей .bsl на 1Сные наименования объектов
 // @match        localhost:9000/*
 // @match        https://sonar.openbsl.ru/*
-// @grant        GM_addStyle
-// @grant        GM.getValue
 // @icon         https://cdn.icon-icons.com/icons2/3915/PNG/512/sonar_logo_icon_249578.png
+// @author       SeiOkami
+// @homepageURL  https://github.com/SeiOkami/SonarBslFileNaming/
+// @supportURL   https://github.com/SeiOkami/SonarBslFileNaming/issues
+// @updateURL    https://raw.githubusercontent.com/SeiOkami/SonarBslFileNaming/main/BslNamingScript.js
+// @downloadURL  https://raw.githubusercontent.com/SeiOkami/SonarBslFileNaming/main/BslNamingScript.js
 // ==/UserScript==
 
 (function() {
@@ -176,7 +177,7 @@
             } else if (ignoredPathFile.indexOf(partPath) == -1) {
 
                 let thisPart = undefined;
-                
+
                 if (isRuName){
                     thisPart = replacePathFile.get(partPath);
                 }
