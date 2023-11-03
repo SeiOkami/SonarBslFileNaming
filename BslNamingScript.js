@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         SonarBSL
-// @version      0.5
+// @version      0.6
 // @description  Скрипт для SonarQube, который изменяет отображение файлов модулей .bsl на 1Сные наименования объектов
 // @match        localhost:9000/*
 // @match        https://sonar.openbsl.ru/*
@@ -36,9 +36,9 @@
 
     //По данным селекторам определяем элементы с именами файлов и методы получения полного имени
     const selectorFunctions = new Map([
-        ['div[title$=".bsl"], span[title$=".bsl"]', fullPathFileElement_ListIssues],
-        ['div[title$=".bsl"] > span', fullPathFileElement_NavListIssues],
-        ['span:has(> button[data-clipboard-text$=".bsl"]) > span', fullPathFileElement_ShowIssue],
+        ['div[title$=".bsl"], span[title$=".bsl"]', getBslElementPath_ListIssues],
+        ['div[title$=".bsl"] > span', getBslElementPath_NavListIssues],
+        ['button[data-clipboard-text$=".bsl"]', getBslElementPath_ShowIssue],
     ]);
 
     //Подписываемся на добавления новых элементов страницы
@@ -114,41 +114,38 @@
             const test_spans = node.querySelectorAll(selector);
             test_spans.forEach(element => {
                 let fullPath = funcGetPath(element);
-                let presentation = presentationFileOneS(fullPath);
-                if (presentation > "") {
-                    element.textContent = presentation;
-                };
+                if (fullPath != undefined && fullPath.element != undefined){
+                    let presentation = presentationFileOneS(fullPath.path);
+                    if (presentation > "") {
+                        fullPath.element.textContent = presentation;
+                    };
+                }
             });
         });
     }
 
     //Возвращает полный путь к файлу из атрибута "title"
-    function fullPathFileElement_ListIssues(element){
-
-        return element?.getAttribute("title");
+    function getBslElementPath_ListIssues(element){
+        let path = element?.getAttribute("title");
+        return new BslElementPath(element, path);
     }
 
     //Возвращает полный путь к файлу из родителя
-    function fullPathFileElement_NavListIssues(element){
-
-        return fullPathFileElement_ListIssues(element?.parentNode);
+    function getBslElementPath_NavListIssues(element){
+        let result = getBslElementPath_ListIssues(element?.parentNode);
+        result.element = element;
+        return result;
     }
 
-    //Возвращает полный путь к файлу из атрибута 'data-clipboard-text' одного из соседей
-    function fullPathFileElement_ShowIssue(element){
-        let thisElem = element;
-        do{
-            thisElem = thisElem.nextElementSibling;
-            if (thisElem == undefined){
-                continue;
-            }
+    //Возвращает полный путь к файлу из атрибута 'data-clipboard-text' и предыдущий элемент с .bsl
+    function getBslElementPath_ShowIssue(element){
 
-            let atribute = thisElem.getAttribute('data-clipboard-text');
-            if (isBslFile(atribute)){
-                return atribute;
-            }
-
-        } while (thisElem);
+        let pathFile = element.getAttribute('data-clipboard-text');
+        var previousElement = element.previousElementSibling;
+        if (previousElement != null && isBslFile(previousElement.innerText)){
+            return new BslElementPath(previousElement, pathFile);
+        }
+        return undefined;
     }
 
     //Проверка является ли текущий путь к файлу 1С
@@ -198,6 +195,14 @@
             return newPath.join('.');
         }
 
+    }
+
+    //Объект содержит полный путь к файлу и элемент, в котором его необходимо заменить на представление 1С
+    class BslElementPath{
+        constructor(element, path) {
+            this.element = element;
+            this.path = path;
+        }
     }
 
 })();
