@@ -119,7 +119,7 @@
             test_spans.forEach(element => {
 
                 let fullPath = funcGetPath(element);
-                if (fullPath != undefined 
+                if (fullPath != undefined
                     && fullPath.element != undefined
                     && hasOnlyText(fullPath.element)){
 
@@ -129,7 +129,7 @@
                     };
 
                 }
-                
+
             });
         });
     }
@@ -147,15 +147,38 @@
         return result;
     }
 
-    //Возвращает полный путь к файлу из атрибута 'data-clipboard-text' и предыдущий элемент с .bsl
+    //Возвращает полный путь к файлу из атрибута 'data-clipboard-text' и элемент с .bsl
     function getBslElementPath_ShowIssue(element){
+
+        var resultElement = undefined;
 
         let pathFile = element.getAttribute('data-clipboard-text');
         var previousElement = element.previousElementSibling;
-        if (previousElement != null && isBslFile(previousElement.innerText)){
-            return new BslElementPath(previousElement, pathFile);
+
+        //Старый интерфейс. В предыдущем родителю div лежит целевой div, в котором картинка и span`ы, в которых нах путь
+        //Удалим все span`ы и вернем последний, в который будет помещено новое имя
+        if (previousElement == null) {
+            element = element.parentElement?.previousElementSibling;
+            if (element != null){
+                let spans = element.querySelectorAll('span');
+                if (spans.length > 0){
+                    for (let i = 0; i < spans.length - 1; i++) {
+                        element.removeChild(spans[i]);
+                    };
+                    resultElement = spans[spans.length-1];
+                };
+            };
+
+        //Новый интерфейс. Возвращаем предыдущий элемент
+        } else if (isBslFile(previousElement.innerText)) {
+            resultElement = previousElement;
         }
-        return undefined;
+
+        if (resultElement != undefined){
+            return new BslElementPath(resultElement, pathFile);
+        } else {
+            return undefined;
+        }
     }
 
     //Проверка является ли текущий путь к файлу 1С
