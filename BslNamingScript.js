@@ -38,6 +38,7 @@
     const selectorFunctions = new Map([
         ['div[title$=".bsl"], span[title$=".bsl"]', getBslElementPath_ListIssues],
         ['div[title$=".bsl"] > span', getBslElementPath_NavListIssues],
+        ['div[title$=".bsl"] > bdi', getBslElementPath_NavListIssues],
         ['button[data-clipboard-text$=".bsl"]', getBslElementPath_ShowIssue],
     ]);
 
@@ -97,6 +98,7 @@
         ['ManagedApplicationModule.bsl', 'МодульУправляемогоПриложения'],
         ['OrdinaryApplicationModule.bsl', 'МодульОбычногоПриложения'],
         ['ExternalConnectionModule.bsl', 'МодульВнешнегоСоединения'],
+        ['SessionModule.bsl', 'МодульСеанса']
     ]);
 
     //Функция обрабатываем новые элементы страницы
@@ -155,7 +157,7 @@
         let pathFile = element.getAttribute('data-clipboard-text');
         var previousElement = element.previousElementSibling;
 
-        //Старый интерфейс. В предыдущем родителю div лежит целевой div, в котором картинка и span`ы, в которых нах путь
+        //Старый интерфейс. В предыдущем родителю div лежит целевой div, в котором картинка и span`ы, в которых наш путь
         //Удалим все span`ы и вернем последний, в который будет помещено новое имя
         if (previousElement == null) {
             element = element.parentElement?.previousElementSibling;
