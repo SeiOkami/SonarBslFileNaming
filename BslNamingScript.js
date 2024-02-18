@@ -98,7 +98,8 @@
         ['ManagedApplicationModule.bsl', 'МодульУправляемогоПриложения'],
         ['OrdinaryApplicationModule.bsl', 'МодульОбычногоПриложения'],
         ['ExternalConnectionModule.bsl', 'МодульВнешнегоСоединения'],
-        ['SessionModule.bsl', 'МодульСеанса']
+        ['SessionModule.bsl', 'МодульСеанса'],
+        ['ValueManagerModule.bsl', 'МодульМенеджераЗначений']
     ]);
 
     //Функция обрабатываем новые элементы страницы
