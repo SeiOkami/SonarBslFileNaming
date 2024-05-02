@@ -40,6 +40,7 @@
         ['div[title$=".bsl"] > span', getBslElementPath_NavListIssues],
         ['div[title$=".bsl"] > bdi', getBslElementPath_NavListIssues],
         ['button[data-clipboard-text$=".bsl"]', getBslElementPath_ShowIssue],
+        ['td > div > a[title$=".bsl"] > span', getBslElementPath_MeasuresTable],
     ]);
 
     //Подписываемся на добавления новых элементов страницы
@@ -182,6 +183,17 @@
         } else {
             return undefined;
         }
+    }
+
+    function getBslElementPath_MeasuresTable(element) {
+        let parentNode = element.parentNode;
+        if (parentNode !== null && isBslFile(parentNode.title)) {
+            while (parentNode.firstChild) {
+                parentNode.removeChild(parentNode.firstChild);
+            }
+            return new BslElementPath(parentNode, parentNode.title);
+        }
+        return undefined;
     }
 
     //Проверка является ли текущий путь к файлу 1С
