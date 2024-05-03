@@ -78,6 +78,7 @@
         ['Tasks', 'Задачи'],
         ['WebServices', 'ВебСервисы'],
         ['ExternalDataProcessors', 'ВнешниеОбработки'],
+        ['Ext', ''],
     ]);
 
     //Скрываемые участки пути к файлу
@@ -99,7 +100,7 @@
         ['OrdinaryApplicationModule.bsl', 'МодульОбычногоПриложения'],
         ['ExternalConnectionModule.bsl', 'МодульВнешнегоСоединения'],
         ['SessionModule.bsl', 'МодульСеанса'],
-        ['ValueManagerModule.bsl', 'МодульМенеджераЗначений']
+        ['ValueManagerModule.bsl', 'МодульМенеджераЗначений'],
     ]);
 
     //Функция обрабатываем новые элементы страницы
@@ -204,7 +205,7 @@
 
             if (baseClass == undefined){
                 baseClass = mapFileBaseClass.get(partPath);
-                if (isRuName == false && baseClass != undefined){
+                if (!isRuName && baseClass !== undefined && baseClass !== '') {
                     baseClass = partPath;
                 }
             } else if (ignoredPathFile.indexOf(partPath) == -1) {
@@ -227,8 +228,15 @@
         if (baseClass == undefined){
             return fullPath;
         } else {
-            newPath.unshift(baseClass);
-            return newPath.join('.');
+            if (baseClass !== '') {
+                newPath.unshift(baseClass);
+            }
+
+            let stringPath = newPath.join('.');
+            if (!isRuName && stringPath.endsWith('.bsl')) {
+                stringPath = stringPath.slice(0, -4);
+            }
+            return stringPath;
         }
 
     }
