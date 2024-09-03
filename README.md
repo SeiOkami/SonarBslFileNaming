@@ -1,3 +1,5 @@
+[![OpenYellow](https://img.shields.io/endpoint?url=https://openyellow.org/data/badges/6/713512145.json)](https://openyellow.org/grid?data=top&repo=713512145)
+
 # SonarBslFileNaming
 Скрипт для SonarQube, который изменяет отображение файлов модулей .bsl на 1Сные наименования объектов
 
