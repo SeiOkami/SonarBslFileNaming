@@ -74,6 +74,7 @@
         ['ExternalDataSources', 'ВнешниеИсточникиДанных'],
         ['HTTPServices', 'HTTPСервисы'],
         ['InformationRegisters', 'РегистрыСведений'],
+        ['IntegrationServices', 'СервисыИнтеграции'],
         ['Reports', 'Отчеты'],
         ['SettingsStorages', 'ХранилищаНастроек'],
         ['Tasks', 'Задачи'],
