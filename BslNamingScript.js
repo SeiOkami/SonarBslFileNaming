@@ -41,6 +41,7 @@
         ['div[title$=".bsl"] > bdi', getBslElementPath_NavListIssues],
         ['button[data-clipboard-text$=".bsl"]', getBslElementPath_ShowIssue],
         ['td > div > a[title$=".bsl"] > span', getBslElementPath_MeasuresTable],
+        ['section[aria-label*=".bsl"] span', getBslElementPath_InsideSection],
     ]);
 
     //Подписываемся на добавления новых элементов страницы
@@ -194,6 +195,24 @@
                 parentNode.removeChild(parentNode.firstChild);
             }
             return new BslElementPath(parentNode, parentNode.title);
+        }
+        return undefined;
+    }
+
+    //Обрабатывает элементы span с урезанным путем к bsl, которые подчинены section со свойством aria-label, содержащим полный путь к bsl
+    function getBslElementPath_InsideSection(element) {
+        if (element.children.length === 0 && isBslFile(element.textContent)){
+            let parentNode = element.parentNode;
+            while (parentNode !== null){
+                if (parentNode.nodeName === "SECTION"){
+                    let arialabel = parentNode.getAttribute('aria-label');
+                    if (typeof arialabel === 'string' && isBslFile(arialabel)) {
+                        return new BslElementPath(element, arialabel);
+                    }
+                } else {
+                    parentNode = parentNode.parentNode;
+                }
+            }
         }
         return undefined;
     }
