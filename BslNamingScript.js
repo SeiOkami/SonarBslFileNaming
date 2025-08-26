@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         SonarBSL
-// @version      0.6
+// @version      0.7
 // @description  Скрипт для SonarQube, который изменяет отображение файлов модулей .bsl на 1Сные наименования объектов
 // @match        localhost:9000/*
 // @match        https://sonar.openbsl.ru/*
@@ -290,5 +290,8 @@
         }
         return true;
       }
+
+    //Запуск при подключении скрипта
+    renameBslFiles(document.body);
 
 })();
